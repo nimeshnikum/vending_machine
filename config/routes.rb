@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :users
 
       post '/deposit', :to => 'deposits#create'
+      delete '/reset', :to => 'deposits#reset'
     end
   end
 end

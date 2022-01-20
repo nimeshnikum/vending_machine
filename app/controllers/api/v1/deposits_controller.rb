@@ -10,6 +10,12 @@ class Api::V1::DepositsController < ApplicationController
     end
   end
 
+  def reset
+    @deposits = current_user.deposits.active
+    @deposits.each { |d| d.update(deleted_at: Time.current) }
+    render json: current_user
+  end
+
   private
 
   def deposit_params
