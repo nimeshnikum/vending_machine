@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :roles, through: :role_assignments
 
   has_many :products, foreign_key: :seller_id
+  has_many :deposits, foreign_key: :buyer_id
 
   def role?(role)
     roles.any? { |r| r.name.underscore.to_sym == role }
