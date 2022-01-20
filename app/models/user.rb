@@ -8,4 +8,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+
+  has_many :role_assignments
+  has_many :roles, through: :role_assignments
+
+  def role?(role)
+    roles.any? { |r| r.name.underscore.to_sym == role }
+  end
 end
