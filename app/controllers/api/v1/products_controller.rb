@@ -10,7 +10,7 @@ class Api::V1::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     render json: @product
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Unable to find a product' }, status: 400
+    render json: { error: 'Product does not exist' }, status: 400
   end
 
   def create
@@ -38,6 +38,8 @@ class Api::V1::ProductsController < ApplicationController
     else
       render json: { error: 'Unable to delete a product' }, status: 400
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Product does not exist' }, status: 400
   end
 
   private
