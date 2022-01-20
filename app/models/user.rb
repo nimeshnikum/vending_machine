@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :role_assignments
   has_many :roles, through: :role_assignments
 
+  has_many :products, foreign_key: :seller_id
+
   def role?(role)
     roles.any? { |r| r.name.underscore.to_sym == role }
   end
