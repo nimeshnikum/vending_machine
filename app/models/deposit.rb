@@ -8,6 +8,14 @@ class Deposit < ApplicationRecord
 
   scope :active, -> { where("deleted_at IS NULL") }
 
+  def self.reset!(scope)
+    scope.each { |d| d.soft_delete! }
+  end
+
+  def soft_delete!
+    update(deleted_at: Time.current)
+  end
+
   private
 
   def possible_amount
