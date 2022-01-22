@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
       post '/deposit', :to => 'deposits#create'
       delete '/reset', :to => 'deposits#reset'
+
+      post '/buy', :to => 'orders#create'
     end
   end
 end
