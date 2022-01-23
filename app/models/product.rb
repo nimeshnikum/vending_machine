@@ -9,8 +9,7 @@ class Product < ApplicationRecord
   private
 
   def cost_in_multiples_of_five
-    unless (cost % 5).zero?
-      errors.add(:cost, 'must be in multiples of 5')
-    end
+    return if cost.blank?
+    errors.add(:cost, 'must be in multiples of 5') unless (cost % 5).zero?
   end
 end
