@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   has_many :deposits, foreign_key: :buyer_id
   has_many :orders, foreign_key: :buyer_id
 
+  #TODO
+  accepts_nested_attributes_for :roles
+
   def role?(role)
     roles.any? { |r| r.name.underscore.to_sym == role }
   end
