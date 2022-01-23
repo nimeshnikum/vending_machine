@@ -2,6 +2,8 @@ class Api::V1::OrdersController < ApplicationController
   before_action :authenticate_api_user!, except: [:index, :show]
 
   def create
+    authorize :order, :create?
+
     response = OrderProcessing.new(current_user, order_params).call
     render json: response
   rescue OrderProcessing::InsufficientQuantityError, OrderProcessing::InsufficientDepositError => e
