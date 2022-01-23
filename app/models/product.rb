@@ -4,5 +4,13 @@ class Product < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :quantity, :cost, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
-  # validate_cost_in_multiples_of_five
+  validate :cost_in_multiples_of_five
+
+  private
+
+  def cost_in_multiples_of_five
+    unless (cost % 5).zero?
+      errors.add(:cost, 'must be in multiples of 5')
+    end
+  end
 end

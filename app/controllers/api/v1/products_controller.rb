@@ -17,7 +17,7 @@ class Api::V1::ProductsController < ApplicationController
     @product = current_user.products.build(product_params)
     authorize @product
 
-    @product.save
+    @product.save!
     render json: @product
   end
 
@@ -25,7 +25,7 @@ class Api::V1::ProductsController < ApplicationController
     @product = current_user.products.find(params[:id])
     authorize @product
 
-    @product && @product.update(product_params)
+    @product && @product.update!(product_params)
     render json: @product
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Product does not exist or is readonly!' }, status: 404
@@ -35,7 +35,7 @@ class Api::V1::ProductsController < ApplicationController
     @product = current_user.products.find(params[:id])
     authorize @product
 
-    @product && @product.destroy
+    @product && @product.destroy!
     render json: { message: 'Product successfully deleted' }, status: 200
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Product does not exist or is readonly!' }, status: 404
