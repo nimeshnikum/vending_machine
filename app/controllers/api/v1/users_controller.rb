@@ -15,7 +15,11 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user && (@user == current_user) && @user.update(user_params)
+    role_id = Role.find_by(name: params[:user][:role]).id
+    user_params.delete(:role)
+    user_params[:role_ids] = role_id
+
+    if @user && (@user == current_user) && @user.update!(user_params.merge!(role_ids: role_id))
       render json: @user
     else
       render json: { error: 'Unable to update a user' }, status: 400
@@ -36,6 +40,6 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:uid, :name)
+    params.require(:user).permit(:uid, :name, :role, :role_ids)
   end
 end

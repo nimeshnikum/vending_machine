@@ -14,8 +14,10 @@ class User < ActiveRecord::Base
   has_many :products, foreign_key: :seller_id
   has_many :orders, foreign_key: :buyer_id
 
+  attr_accessor :role
+
   #TODO
-  accepts_nested_attributes_for :roles
+  # accepts_nested_attributes_for :roles
 
   def role?(role)
     roles.any? { |r| r.name.underscore.to_sym == role }
